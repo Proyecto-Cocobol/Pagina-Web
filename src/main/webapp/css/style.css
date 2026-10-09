@@ -85,7 +85,7 @@ button {
 
     letter-spacing: 3px;
 
-    color: var(--green);
+    color: #c4017b;
 
     margin-bottom: 18px;
 }
@@ -118,7 +118,7 @@ button {
 .intro-text h2 span,
 .values-title h2 span {
 
-    color: var(--green);
+    color: #c4017b;
 }
 
 
@@ -147,7 +147,7 @@ button {
 
 .btn-primary {
 
-    background: var(--green);
+    background: #c4017b;
     color: var(--black);
 }
 
@@ -254,13 +254,12 @@ button {
 
 .nav-menu a:hover {
 
-    color: var(--green);
+    color: #c4017b;
 }
 
 .nav-menu .nav-button {
 
-    background: var(--green);
-
+    background:#c4017b;
     color: var(--black);
 
     padding: 14px 20px;
@@ -346,7 +345,7 @@ button {
 
     display: inline-block;
 
-    color: var(--green);
+    color: #c4017b;
 
     font-size: 13px;
 
@@ -374,7 +373,7 @@ button {
 
 .hero h1 span {
 
-    color: var(--green);
+    color: #c4017b;
 }
 
 .hero p {
@@ -425,7 +424,7 @@ button {
 
     margin: 12px auto 0;
 
-    background: var(--green);
+    background: #c4017b;
 }
 
 
@@ -469,7 +468,7 @@ button {
 
     letter-spacing: 2px;
 
-    border-bottom: 2px solid var(--green);
+    border-bottom: 2px solid #c4017b;
 
     padding-bottom: 7px;
 }
@@ -491,7 +490,7 @@ button {
     bottom: 0;
     left: 0;
 
-    background: var(--green);
+    background: #c4017b;
 
     color: var(--black);
 
@@ -638,7 +637,7 @@ button {
 }
 
 .methodology-logo span {
-    color: var(--green);
+    color: #c4017b;
 }
 
 .methodology-content h2 {
@@ -654,7 +653,7 @@ button {
 
 .methodology-content h2 span {
 
-    color: var(--green);
+    color: #c4017b;
 }
 
 .methodology-content h3 {
@@ -711,7 +710,7 @@ button {
 
     border-radius: 50%;
 
-    background: var(--green);
+    background: #c4017b;
 
     font-size: 12px;
 }
@@ -779,7 +778,7 @@ button {
 
 .v100 h2 strong {
 
-    color: var(--green);
+    color: #c4017b;
 }
 
 .v100 p {
@@ -794,7 +793,7 @@ button {
 }
 
 .v100 p strong {
-    color: var(--green);
+    color: #c4017b;
 }
 
 .v100-line {
@@ -803,7 +802,7 @@ button {
 
     height: 4px;
 
-    background: var(--green);
+    background: #c4017b;
 
     margin: 25px 0;
 }
@@ -875,7 +874,7 @@ button {
 
     font-weight: 900;
 
-    color: var(--green);
+    color: #c4017b;
 }
 
 .category-content {
@@ -957,7 +956,7 @@ button {
 
     letter-spacing: 3px;
 
-    color: var(--green);
+    color: #c4017b;
 }
 
 .schedule strong {
@@ -1033,7 +1032,7 @@ button {
 
 .program-content > span {
 
-    color: var(--green);
+    color: #c4017b;
 
     font-size: 10px;
 
@@ -1055,7 +1054,7 @@ button {
 
 .program-content h3 span {
 
-    color: var(--green);
+    color: #c4017b;
 }
 
 .program-content p {
@@ -1118,7 +1117,7 @@ button {
 
 .value-item span {
 
-    color: var(--green);
+    color: #c4017b;
 
     font-family: 'Barlow Condensed', sans-serif;
 
@@ -1194,7 +1193,7 @@ button {
 
 .cta h2 span {
 
-    color: var(--green);
+    color: #c4017b;
 
     display: block;
 }
@@ -1279,7 +1278,7 @@ button {
 
     font-weight: 800;
 
-    color: var(--green-dark);
+    color: #c4017b;
 }
 
 .requirements-list p {
@@ -1341,7 +1340,7 @@ button {
 
 .footer-column h4 {
 
-    color: var(--green);
+    color: #c4017b;
 
     font-size: 11px;
 
