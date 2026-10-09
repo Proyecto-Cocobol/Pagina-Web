@@ -1,0 +1,438 @@
+
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+   ========================================================= */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background-color: #f4f4f4;
+
+    color: #222;
+
+}
+
+
+/* =========================================================
+   ENCABEZADO
+   ========================================================= */
+
+.encabezado-admin {
+
+    background-color: white;
+
+    min-height: 80px;
+
+    padding: 15px 5%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+
+.logo h1 {
+
+    font-size: 25px;
+
+}
+
+
+.usuario {
+
+    display: flex;
+
+    flex-direction: column;
+
+    text-align: right;
+
+    font-size: 13px;
+
+}
+
+
+.usuario strong {
+
+    font-size: 16px;
+
+}
+
+
+/* =========================================================
+   NAVEGACIÓN
+   ========================================================= */
+
+.barra-navegacion {
+
+    background-color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 35px;
+
+    padding: 15px;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+
+.barra-navegacion a {
+
+    text-decoration: none;
+
+    color: #333;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    padding-bottom: 7px;
+
+}
+
+
+.barra-navegacion a:hover {
+
+    border-bottom: 2px solid #222;
+
+}
+
+
+.barra-navegacion .activo {
+
+    border-bottom: 2px solid #222;
+
+}
+
+
+/* =========================================================
+   CONTENIDO PRINCIPAL
+   ========================================================= */
+
+.contenido-admin {
+
+    width: 90%;
+
+    max-width: 1200px;
+
+    margin: 30px auto;
+
+}
+
+
+/* =========================================================
+   BIENVENIDA
+   ========================================================= */
+
+.bienvenida {
+
+    margin-bottom: 30px;
+
+}
+
+
+.bienvenida h2 {
+
+    font-size: 25px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.bienvenida p {
+
+    color: #777;
+
+}
+
+
+/* =========================================================
+   GRID PRINCIPAL
+   ========================================================= */
+
+.panel-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1.5fr;
+
+    gap: 25px;
+
+}
+
+
+/* =========================================================
+   TARJETAS
+   ========================================================= */
+
+.tarjeta {
+
+    background-color: white;
+
+    border-radius: 8px;
+
+    padding: 25px;
+
+    border: 1px solid #ddd;
+
+}
+
+
+.tarjeta h3 {
+
+    margin-bottom: 20px;
+
+    font-size: 19px;
+
+}
+
+
+/* =========================================================
+   ACTIVIDADES
+   ========================================================= */
+
+.actividad {
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #eee;
+
+}
+
+
+.actividad:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.actividad strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+}
+
+
+.actividad p {
+
+    color: #777;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   CALENDARIO
+   ========================================================= */
+
+.dias-semana,
+.dias {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    text-align: center;
+
+}
+
+
+.dias-semana {
+
+    font-weight: bold;
+
+    margin-bottom: 15px;
+
+}
+
+
+.dias {
+
+    gap: 10px;
+
+}
+
+
+.dias span {
+
+    padding: 8px;
+
+    border-radius: 5px;
+
+}
+
+
+.dias span:hover {
+
+    background-color: #eee;
+
+}
+
+
+.dia-activo {
+
+    background-color: #222;
+
+    color: white;
+
+}
+
+
+/* =========================================================
+   ACTIVIDAD RECIENTE
+   ========================================================= */
+
+.actividad-reciente {
+
+    margin-top: 25px;
+
+}
+
+
+.registro-actividad {
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #eee;
+
+}
+
+
+.registro-actividad:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.registro-actividad p {
+
+    margin-top: 5px;
+
+    color: #666;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   PIE DE PÁGINA
+   ========================================================= */
+
+footer {
+
+    margin-top: 50px;
+
+    padding: 25px 5%;
+
+    background-color: white;
+
+    border-top: 1px solid #ddd;
+
+    display: flex;
+
+    justify-content: space-between;
+
+}
+
+
+footer a {
+
+    color: #222;
+
+    text-decoration: none;
+
+}
+
+
+footer a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+
+    .barra-navegacion {
+
+        flex-wrap: wrap;
+
+        gap: 15px;
+
+    }
+
+
+    .panel-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+}
+
+
+@media (max-width: 500px) {
+
+
+    .encabezado-admin {
+
+        flex-direction: column;
+
+        gap: 15px;
+
+    }
+
+
+    .usuario {
+
+        text-align: center;
+
+    }
+
+
+    .contenido-admin {
+
+        width: 94%;
+
+    }
+
+}
+

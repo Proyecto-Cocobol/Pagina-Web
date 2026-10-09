@@ -1,0 +1,165 @@
+/* ==================================================
+   CONFIGURACIÓN GENERAL
+   ================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+    background-color: #f2f2f2;
+}
+
+/* ==================================================
+   CONTENEDOR: CENTRA EL FORMULARIO EN LA PANTALLA
+   ================================================== */
+
+.contenedor-login {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ==================================================
+   TARJETA PRINCIPAL
+   ================================================== */
+
+.tarjeta-login {
+    width: 100%;
+    max-width: 430px;
+    padding: 38px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.09);
+}
+
+/* ==================================================
+   ENCABEZADO
+   ================================================== */
+
+.encabezado {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.encabezado h1 {
+    font-size: 29px;
+    margin-bottom: 8px;
+}
+
+.encabezado p {
+    color: #777;
+    font-size: 14px;
+}
+
+.tarjeta-login h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.descripcion {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* ==================================================
+   CAMPOS DE ENTRADA
+   ================================================== */
+
+.grupo-formulario {
+    margin-bottom: 20px;
+}
+
+.grupo-formulario label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.grupo-formulario input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: #fff;
+}
+
+.grupo-formulario input:focus {
+    outline: none;
+    border-color: #333;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+}
+
+/* ==================================================
+   BOTÓN INGRESAR
+   ================================================== */
+
+.boton-principal {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 5px;
+    background-color: #222;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.boton-principal:hover {
+    background-color: #444;
+}
+
+.boton-principal:focus-visible {
+    outline: 2px solid #222;
+    outline-offset: 3px;
+}
+
+/* ==================================================
+   MENSAJE DE VALIDACIÓN
+   ================================================== */
+
+.mensaje-error {
+    color: #b42318;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+/* ==================================================
+   PIE DE LA TARJETA
+   ================================================== */
+
+.pie-login {
+    margin-top: 25px;
+    padding-top: 18px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    color: #777;
+    font-size: 12px;
+}
+
+/* ==================================================
+   ADAPTACIÓN A CELULARES
+   ================================================== */
+
+@media (max-width: 480px) {
+    .tarjeta-login {
+        padding: 25px;
+    }
+
+    .encabezado h1 {
+        font-size: 25px;
+    }
+}
+
