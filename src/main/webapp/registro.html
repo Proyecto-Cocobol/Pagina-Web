@@ -1,43 +1,59 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#080808">
+    <meta name="description"
+          content="Acceso al sistema de administración de Academia Lobos.">
 
     <title>Ingresar | Academia Lobos</title>
 
     <!-- Estilos de la pantalla de acceso -->
     <link rel="stylesheet" href="css/registro.css">
 </head>
+
 <body>
 
     <!-- Contenedor principal -->
     <main class="contenedor-login">
 
         <!-- Tarjeta de inicio de sesión -->
-        <section class="tarjeta-login">
+        <section class="tarjeta-login"
+                 aria-labelledby="titulo-login">
 
+            <!-- Encabezado de la academia -->
             <header class="encabezado">
+
                 <h1>Academia Lobos</h1>
+
                 <p>Sistema de administración</p>
+
             </header>
 
-            <h2>Iniciar sesión</h2>
+            <!-- Título del formulario -->
+            <h2 id="titulo-login">Iniciar sesión</h2>
 
             <p class="descripcion">
                 Ingresa tus datos para continuar.
             </p>
 
             <!--
-                El formulario no crea usuarios ni guarda contraseñas.
-                JavaScript solamente comprobará que los dos campos
-                estén completos antes de permitir el acceso.
+                El formulario conserva los campos originales.
+                No crea usuarios ni guarda contraseñas.
+                La autenticación real deberá implementarse
+                posteriormente en el servidor.
             -->
             <form id="formLogin">
 
+                <!-- Número de boleta -->
                 <div class="grupo-formulario">
-                    <label for="boleta">Número de boleta</label>
+
+                    <label for="boleta">
+                        Número de boleta
+                    </label>
 
                     <input
                         type="text"
@@ -47,10 +63,15 @@
                         autocomplete="username"
                         required
                     >
+
                 </div>
 
+                <!-- Contraseña -->
                 <div class="grupo-formulario">
-                    <label for="password">Contraseña</label>
+
+                    <label for="password">
+                        Contraseña
+                    </label>
 
                     <input
                         type="password"
@@ -60,28 +81,43 @@
                         autocomplete="current-password"
                         required
                     >
+
                 </div>
 
                 <!-- Mensaje de validación -->
-                <p id="mensajeError" class="mensaje-error"
-                   role="alert" aria-live="polite"></p>
+                <p
+                    id="mensajeError"
+                    class="mensaje-error"
+                    role="alert"
+                    aria-live="polite">
+                </p>
 
-                <button type="submit" class="boton-principal">
+                <!-- Botón de acceso -->
+                <button
+                    type="submit"
+                    class="boton-principal">
+
                     Ingresar
+
                 </button>
 
             </form>
 
+            <!-- Pie de tarjeta -->
             <footer class="pie-login">
+
                 Academia Lobos · Sistema interno
+
             </footer>
 
         </section>
 
     </main>
 
-    <!-- Lógica de validación -->
+    <!-- Lógica de validación existente -->
     <script src="js/registro.js"></script>
+
 </body>
+
 </html>
 ```
