@@ -190,11 +190,12 @@ button {
     z-index: 1000;
 
     transition: var(--transition);
+    background-color: white;
 }
 
 .header.scrolled {
 
-    background: rgba(8,8,8,.96);
+    background:#333333;
 
     backdrop-filter: blur(12px);
 
@@ -241,7 +242,7 @@ button {
 
 .nav-menu a {
 
-    color: var(--white);
+    color:#c4017b ;
 
     font-size: 11px;
 
@@ -319,8 +320,8 @@ button {
 
         linear-gradient(
             90deg,
-            rgba(0,0,0,.92) 0%,
-            rgba(0,0,0,.72) 45%,
+            rgba(0,0,0,.92) 30%,
+            rgba(196,1,123,0.7) 70%,
             rgba(0,0,0,.25) 100%
         ),
 
@@ -1297,9 +1298,8 @@ button {
 
     padding-top: 70px;
 
-    background: var(--black);
+    background: #333333;
 
-    color: white;
 }
 
 .footer-grid {
@@ -1540,4 +1540,7 @@ button {
         flex-direction: column;
     }
 
+    
+    
 }
+
