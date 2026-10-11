@@ -1,340 +1,110 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Administrador - Academia Lobos</title>
+    <title>Administrador | Academia Lobos</title>
 
     <link rel="stylesheet" href="css/admin.css">
-
 </head>
-
 
 <body>
 
-
-    <!-- =================================================
-         ENCABEZADO
-         ================================================= -->
-
-    <header class="encabezado-admin">
-
-
-        <!-- NOMBRE DE LA ACADEMIA -->
-
-        <div class="logo">
-
-            <h1>Academia Lobos</h1>
-
-        </div>
-
-
-        <!-- INFORMACIÓN DEL USUARIO -->
-
-        <div class="usuario">
-
-            <span>Módulo</span>
-
-            <strong>Administrador</strong>
-
-        </div>
-
-
-    </header>
-
-
-    <!-- =================================================
-         BARRA DE NAVEGACIÓN
-         ================================================= -->
-
-    <nav class="barra-navegacion">
-
-
-        <a href="#" class="activo">
-            Alumnos
-        </a>
-
-
-        <a href="#">
-            Personal
-        </a>
-
-
-        <a href="#">
-            Finanzas
-        </a>
-
-
-        <a href="#">
-            Equipos
-        </a>
-
-
-        <a href="#">
-            Calendario
-        </a>
-
-
-        <a href="#">
-            Documentos
-        </a>
-
-
-        <a href="#">
-            Uniformes
-        </a>
-
-
-    </nav>
-
-
-    <!-- =================================================
-         CONTENIDO PRINCIPAL
-         ================================================= -->
-
-    <main class="contenido-admin">
-
-
-        <!-- =================================================
-             BIENVENIDA
-             ================================================= -->
-
-        <section class="bienvenida">
-
-            <h2>
-                BIENVENIDO DE NUEVO ADMINISTRADOR
-            </h2>
-
-            <!--
-                Este elemento será rellenado por JavaScript
-                con el correo del usuario que inició sesión.
-            -->
-
-            <p id="correoAdministrador">
-                Correo:
-            </p>
-
-        </section>
-
-
-
-        <!-- =================================================
-             CONTENEDOR DE COLUMNAS
-             ================================================= -->
-
-        <div class="panel-grid">
-
-
-            <!-- =================================================
-                 ACTIVIDADES
-                 ================================================= -->
-
-            <section class="tarjeta actividades">
-
-                <h3>
-                    Próximas actividades
-                </h3>
-
-
-                <div class="actividad">
-
-                    <strong>
-                        Miércoles 23 de Septiembre
-                    </strong>
-
-                    <p>
-                        Actividad programada
-                    </p>
-
-                </div>
-
-
-                <div class="actividad">
-
-                    <strong>
-                        Viernes 25 de Septiembre
-                    </strong>
-
-                    <p>
-                        Actividad programada
-                    </p>
-
-                </div>
-
-
-                <div class="actividad">
-
-                    <strong>
-                        Lunes 28 de Septiembre
-                    </strong>
-
-                    <p>
-                        Actividad programada
-                    </p>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =================================================
-                 CALENDARIO
-                 ================================================= -->
-
-            <section class="tarjeta calendario">
-
-                <h3>
-                    Septiembre 2026
-                </h3>
-
-
-                <div class="dias-semana">
-
-                    <span>L</span>
-                    <span>Ma</span>
-                    <span>Mi</span>
-                    <span>J</span>
-                    <span>V</span>
-                    <span>S</span>
-                    <span>D</span>
-
-                </div>
-
-
-                <div class="dias">
-
-
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
-                    <span>6</span>
-                    <span>7</span>
-
-
-                    <span>8</span>
-                    <span>9</span>
-                    <span class="dia-activo">10</span>
-                    <span>11</span>
-                    <span>12</span>
-                    <span>13</span>
-                    <span>14</span>
-
-
-                    <span>15</span>
-                    <span>16</span>
-                    <span>17</span>
-                    <span>18</span>
-                    <span>19</span>
-                    <span>20</span>
-                    <span>21</span>
-
-
-                    <span>22</span>
-                    <span>23</span>
-                    <span>24</span>
-                    <span>25</span>
-                    <span>26</span>
-                    <span>27</span>
-                    <span>28</span>
-
-
-                </div>
-
-            </section>
-
-        </div>
-
-
-
-        <!-- =================================================
-             INFORMACIÓN / ACTIVIDAD
-             ================================================= -->
-
-        <section class="tarjeta actividad-reciente">
-
-            <h3>
-                Actividad reciente
-            </h3>
-
-
-            <div class="registro-actividad">
-
-                <strong>
-                    Tema: Pagos
-                </strong>
-
-                <p>
-                    Alumno: Juan
-                </p>
-
-                <p>
-                    Concepto: Uniforme
-                </p>
-
-                <p>
-                    Total: $500
-                </p>
-
+    <!-- =========================================
+         CONTENEDOR PRINCIPAL
+    ========================================== -->
+
+    <div id="app">
+
+        <!-- HEADER -->
+        <header class="admin-header">
+
+            <div class="logo-area">
+                <a href="#dashboard" class="logo-link">
+                    <img
+                        src="assets/logo-academia-lobos-trans.png"
+                        alt="Academia Lobos"
+                        class="admin-logo">
+                </a>
             </div>
 
+            <!-- Botón móvil -->
+            <button id="menuToggle" class="menu-toggle">
+                ☰
+            </button>
 
-            <div class="registro-actividad">
+            <!-- NAVEGACIÓN -->
+            <nav id="mainNav" class="main-nav">
 
-                <strong>
-                    Tema: Alumno Nuevo
-                </strong>
+                <a href="#alumnos" data-route="alumnos">
+                    Alumnos
+                </a>
 
-                <p>
-                    Alumno: Luis
-                </p>
+                <a href="#personal" data-route="personal">
+                    Personal
+                </a>
 
-                <p>
-                    Solicitud: muestraLuis.pdf
-                </p>
+                <a href="#finanzas" data-route="finanzas">
+                    Finanzas
+                </a>
 
+                <a href="#equipos" data-route="equipos">
+                    Equipos
+                </a>
+
+                <a href="#calendario" data-route="calendario">
+                    Calendario
+                </a>
+
+                <a href="#documentos" data-route="documentos">
+                    Documentos
+                </a>
+
+                <a href="#uniformes" data-route="uniformes">
+                    Uniformes
+                </a>
+
+            </nav>
+
+            <div class="admin-user">
+                <span class="admin-dot"></span>
+                <span>Administrador</span>
             </div>
 
-        </section>
+        </header>
 
 
-    </main>
+        <!-- =========================================
+             CONTENIDO DINÁMICO
+        ========================================== -->
+
+        <main id="appContent" class="app-content">
+            <!-- El contenido se genera mediante admin.js -->
+        </main>
 
 
+        <!-- =========================================
+             FOOTER
+        ========================================== -->
 
-    <!-- =================================================
-         PIE DE PÁGINA
-         ================================================= -->
+        <footer class="admin-footer">
 
-    <footer>
+            <div>
+                <strong>Academia Lobos</strong>
+            </div>
 
-        <span>
-            Academia Lobos
-        </span>
+            <div>
+                <span>Contáctanos</span>
+            </div>
 
+        </footer>
 
-        <a href="#">
-            Contáctanos
-        </a>
-
-    </footer>
+    </div>
 
 
-    <!-- =================================================
-         JAVASCRIPT
-         ================================================= -->
-
+    <!-- JAVASCRIPT -->
     <script src="js/admin.js"></script>
 
 </body>
-
 </html>
-```
