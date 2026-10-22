@@ -8,61 +8,84 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import org.mindrot.jbcrypt.BCrypt;
 
-/** Crea la cuenta inicial una sola vez al desplegar, usando el esquema existente. */
+/** Crea un administrador inicial solo cuando no existe uno y se configuró una clave de un solo uso. */
 @WebListener
 public class InitialAdminInitializer implements ServletContextListener {
-    private static final String INITIAL_USERNAME = "academia_lobos";
-    private static final String INITIAL_PASSWORD = "0123456789";
-
     @Override
     public void contextInitialized(ServletContextEvent event) {
         try {
-            ensureInitialAdmin();
-            event.getServletContext().log("Cuenta inicial de administrador comprobada.");
+            provisionApplicationDatabaseUser(event.getServletContext());
+            ensureInitialAdmin(event.getServletContext());
         } catch (SQLException e) {
             event.getServletContext().log("No se pudo preparar la cuenta inicial. Revisa MySQL, el esquema y Connector/J.", e);
         }
     }
 
-    private void ensureInitialAdmin() throws SQLException {
+    private void provisionApplicationDatabaseUser(jakarta.servlet.ServletContext context) throws SQLException {
+        if (!Boolean.parseBoolean(System.getenv("DB_BOOTSTRAP_APP_USER"))) return;
+
+        String username = System.getenv("DB_APP_USER");
+        String password = System.getenv("DB_APP_PASSWORD");
+        if (!"cocobol_app_20261022".equals(username) || password == null || password.length() < 20) {
+            throw new SQLException("La configuración temporal de DB_APP_USER no es válida.");
+        }
+
+        String account = "'cocobol_app_20261022'@'%'";
+        String passwordLiteral = password.replace("\\", "\\\\").replace("'", "''");
+        try (Connection c = DatabaseConnection.getAdminConnection(); Statement statement = c.createStatement()) {
+            statement.execute("CREATE USER IF NOT EXISTS " + account + " IDENTIFIED BY '" + passwordLiteral + "'");
+            statement.execute("GRANT SELECT ON academia_lobos.usuario TO " + account);
+            statement.execute("GRANT SELECT ON academia_lobos.rol TO " + account);
+            statement.execute("GRANT SELECT ON academia_lobos.alumno TO " + account);
+            statement.execute("GRANT SELECT ON academia_lobos.persona TO " + account);
+            statement.execute("GRANT INSERT ON academia_lobos.persona TO " + account);
+            statement.execute("GRANT INSERT ON academia_lobos.usuario TO " + account);
+            statement.execute("GRANT INSERT ON academia_lobos.alumno TO " + account);
+            statement.execute("GRANT INSERT ON academia_lobos.personal TO " + account);
+            statement.execute("GRANT INSERT ON academia_lobos.responsable TO " + account);
+            statement.execute("GRANT UPDATE (contrasena_hash, nombre_usuario, id_rol) ON academia_lobos.usuario TO " + account);
+        }
+        try (Connection ignored = DatabaseConnection.getConnection()) {
+            context.log("Se aprovisionó y verificó el usuario limitado de la aplicación. Desactiva DB_BOOTSTRAP_APP_USER y elimina DB_USER/DB_PASSWORD.");
+        }
+    }
+
+    private void ensureInitialAdmin(jakarta.servlet.ServletContext context) throws SQLException {
         try (Connection c = DatabaseConnection.getConnection()) {
             c.setAutoCommit(false);
             try {
-                long adminRoleId = findAdminRole(c);
-                String hash = BCrypt.hashpw(INITIAL_PASSWORD, BCrypt.gensalt(12));
+                if (findActiveAdmin(c) != null) {
+                    c.commit();
+                    context.log("Se conservó la cuenta administradora existente; no se cambiaron sus credenciales.");
+                    return;
+                }
 
+                String username = System.getenv("INITIAL_ADMIN_USERNAME");
+                String password = System.getenv("INITIAL_ADMIN_PASSWORD");
+                if (username == null || username.isBlank() || password == null || password.length() < 10) {
+                    c.commit();
+                    context.log("No hay administrador activo y no se configuró INITIAL_ADMIN_USERNAME e INITIAL_ADMIN_PASSWORD (mínimo 10 caracteres); no se creó ni modificó ninguna cuenta.");
+                    return;
+                }
+
+                username = username.trim();
+                long adminRoleId = findAdminRole(c);
                 try (PreparedStatement ps = c.prepareStatement(
-                        "SELECT u.id_usuario,u.contrasena_hash,r.codigo FROM usuario u JOIN rol r ON r.id_rol=u.id_rol WHERE u.nombre_usuario=? FOR UPDATE")) {
-                    ps.setString(1, INITIAL_USERNAME);
+                        "SELECT r.codigo FROM usuario u JOIN rol r ON r.id_rol=u.id_rol WHERE u.nombre_usuario=? FOR UPDATE")) {
+                    ps.setString(1, username);
                     try (ResultSet rs = ps.executeQuery()) {
                         if (rs.next()) {
-                            if (!"ADMINISTRADOR".equals(rs.getString("codigo"))) {
-                                throw new SQLException("El usuario academia_lobos ya existe y no tiene el rol Administrador.");
-                            }
-                            if (rs.getString("contrasena_hash") == null || rs.getString("contrasena_hash").isBlank()) {
-                                updatePassword(c, rs.getLong("id_usuario"), hash);
-                            }
-                            c.commit();
-                            return;
+                            throw new SQLException("El nombre configurado para el administrador inicial ya existe; no se modificó la cuenta.");
                         }
                     }
                 }
 
-                Long activeAdminId = findActiveAdmin(c);
-                if (activeAdminId != null) {
-                    try (PreparedStatement ps = c.prepareStatement(
-                            "UPDATE usuario SET nombre_usuario=?,contrasena_hash=? WHERE id_usuario=?")) {
-                        ps.setString(1, INITIAL_USERNAME);
-                        ps.setString(2, hash);
-                        ps.setLong(3, activeAdminId);
-                        ps.executeUpdate();
-                    }
-                } else {
-                    createAdmin(c, adminRoleId, hash);
-                }
+                createAdmin(c, adminRoleId, username, BCrypt.hashpw(password, BCrypt.gensalt(12)));
                 c.commit();
+                context.log("Se creó la cuenta administradora inicial con las credenciales configuradas.");
             } catch (SQLException | RuntimeException e) {
                 c.rollback();
                 if (e instanceof SQLException sqlException) throw sqlException;
@@ -87,15 +110,7 @@ public class InitialAdminInitializer implements ServletContextListener {
         }
     }
 
-    private static void updatePassword(Connection c, long userId, String hash) throws SQLException {
-        try (PreparedStatement ps = c.prepareStatement("UPDATE usuario SET contrasena_hash=? WHERE id_usuario=?")) {
-            ps.setString(1, hash);
-            ps.setLong(2, userId);
-            ps.executeUpdate();
-        }
-    }
-
-    private static void createAdmin(Connection c, long roleId, String hash) throws SQLException {
+    private static void createAdmin(Connection c, long roleId, String username, String hash) throws SQLException {
         long personId;
         try (PreparedStatement ps = c.prepareStatement(
                 "INSERT INTO persona(nombre,apellido_paterno,estado) VALUES('Administrador','Academia','ACTIVO')",
@@ -110,7 +125,7 @@ public class InitialAdminInitializer implements ServletContextListener {
                 "INSERT INTO usuario(id_persona,id_rol,nombre_usuario,contrasena_hash,estado) VALUES(?,?,?,?,'ACTIVO')")) {
             ps.setLong(1, personId);
             ps.setLong(2, roleId);
-            ps.setString(3, INITIAL_USERNAME);
+            ps.setString(3, username);
             ps.setString(4, hash);
             ps.executeUpdate();
         }
