@@ -69,7 +69,10 @@
 
             <div class="admin-user">
                 <span class="admin-dot"></span>
-                <span>Administrador</span>
+                <span id="userRole">Cuenta</span>
+                <button type="button" id="accountsButton" class="account-button" hidden>Administrar cuentas</button>
+                <button type="button" id="changePasswordButton" class="account-button">Cambiar contraseña</button>
+                <button type="button" id="logoutButton" class="account-button">Cerrar sesión</button>
             </div>
 
         </header>
@@ -101,6 +104,50 @@
         </footer>
 
     </div>
+
+    <dialog id="passwordDialog" class="password-dialog" aria-labelledby="passwordDialogTitle">
+        <form id="changePasswordForm" method="dialog">
+            <h2 id="passwordDialogTitle">Cambiar contraseña</h2>
+            <p>¿Estás seguro de que deseas cambiar tu contraseña?</p>
+            <label>Contraseña actual<input name="currentPassword" type="password" autocomplete="current-password" required></label>
+            <label>Nueva contraseña<input name="newPassword" type="password" autocomplete="new-password" minlength="10" required></label>
+            <label>Confirma la nueva contraseña<input name="confirmPassword" type="password" autocomplete="new-password" minlength="10" required></label>
+            <p id="passwordMessage" role="alert" aria-live="polite"></p>
+            <div class="dialog-actions"><button type="button" id="cancelPassword">Cancelar</button><button type="submit">Actualizar contraseña</button></div>
+        </form>
+    </dialog>
+
+    <dialog id="accountDialog" class="password-dialog account-dialog" aria-labelledby="accountDialogTitle">
+        <form id="accountForm">
+            <h2 id="accountDialogTitle">Crear cuenta</h2>
+            <input type="hidden" name="id">
+            <label>Nombre<input name="name" required></label>
+            <label>Apellido paterno<input name="paternalSurname" required></label>
+            <label>Apellido materno<input name="maternalSurname"></label>
+            <label>Correo<input name="email" type="email"></label>
+            <label>Teléfono<input name="phone" type="tel"></label>
+            <label>Nombre de usuario<input name="username" required></label>
+            <label>Rol<select name="roleCode" required><option value="ADMINISTRADOR">Administrador</option><option value="PROFESOR">Profesor</option><option value="RESPONSABLE">Padre/Madre/Tutor</option><option value="ALUMNO">Alumno</option></select></label>
+            <label>Número de boleta (alumno)<input name="boleta"></label>
+            <label>Puesto (profesor)<input name="puesto"></label>
+            <label>Parentesco (responsable)<select name="parentesco"><option value="TUTOR">Tutor</option><option value="PADRE">Padre</option><option value="MADRE">Madre</option></select></label>
+            <label id="createPasswordField">Contraseña inicial (mínimo 10 caracteres)<input name="password" type="password" minlength="10" autocomplete="new-password"></label>
+            <p id="accountMessage" role="alert" aria-live="polite"></p>
+            <div class="dialog-actions"><button type="button" id="cancelAccount">Cancelar</button><button type="submit">Guardar</button></div>
+        </form>
+    </dialog>
+
+    <dialog id="resetAccountPasswordDialog" class="password-dialog" aria-labelledby="resetAccountPasswordTitle">
+        <form id="resetAccountPasswordForm">
+            <h2 id="resetAccountPasswordTitle">Restablecer contraseña</h2>
+            <input type="hidden" name="id">
+            <p>La contraseña anterior no se puede consultar. Define una nueva contraseña para esta cuenta.</p>
+            <label>Nueva contraseña<input name="password" type="password" minlength="10" autocomplete="new-password" required></label>
+            <label>Confirmar contraseña<input name="confirmation" type="password" minlength="10" autocomplete="new-password" required></label>
+            <p id="resetAccountPasswordMessage" role="alert" aria-live="polite"></p>
+            <div class="dialog-actions"><button type="button" id="cancelResetAccountPassword">Cancelar</button><button type="submit">Restablecer</button></div>
+        </form>
+    </dialog>
 
 
     <!-- JAVASCRIPT -->

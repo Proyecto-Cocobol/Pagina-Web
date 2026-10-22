@@ -13,6 +13,121 @@ const appContent = document.getElementById("appContent");
 const mainNav = document.getElementById("mainNav");
 const menuToggle = document.getElementById("menuToggle");
 
+fetch("api/auth").then(async response => {
+    if (!response.ok) { window.location.replace("registro.html"); return; }
+    const account = await response.json();
+    document.getElementById("userRole").textContent = account.role;
+    document.getElementById("accountsButton").hidden = !account.isAdmin;
+}).catch(() => window.location.replace("registro.html"));
+
+const accountsButton = document.getElementById("accountsButton");
+accountsButton.addEventListener("click", renderAccounts);
+
+async function renderAccounts() {
+    appContent.innerHTML = '<section class="accounts-panel"><div class="accounts-heading"><div><h1>Cuentas de acceso</h1><p>Usuarios, roles y estado de las cuentas.</p></div><button class="btn btn-primary" id="newAccountButton">Crear cuenta</button></div><p id="accountsMessage" role="alert"></p><div class="table-container"><table class="data-table"><thead><tr><th>Usuario</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="accountsRows"></tbody></table></div><p class="account-security-note">Las contraseñas se guardan cifradas como hashes, por lo que no se muestran. Puedes asignar una nueva con “Restablecer contraseña”.</p></section>';
+    document.getElementById("newAccountButton").addEventListener("click", () => openAccountDialog());
+    try {
+        const response = await fetch("api/auth/accounts");
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "No se pudieron cargar las cuentas.");
+        const rows = document.getElementById("accountsRows");
+        result.accounts.forEach(account => {
+            const row = document.createElement("tr");
+            [account.username, account.name, account.email, account.role, account.status].forEach(value => {
+                const cell = document.createElement("td"); cell.textContent = value || "—"; row.appendChild(cell);
+            });
+            const actions = document.createElement("td");
+            const edit = document.createElement("button"); edit.className = "btn btn-outline btn-small"; edit.textContent = "Editar";
+            edit.addEventListener("click", () => openAccountDialog(account));
+            const reset = document.createElement("button"); reset.className = "btn btn-outline btn-small"; reset.textContent = "Restablecer contraseña";
+            reset.addEventListener("click", () => openResetAccountPassword(account));
+            actions.append(edit, document.createTextNode(" "), reset); row.appendChild(actions); rows.appendChild(row);
+        });
+    } catch (error) { document.getElementById("accountsMessage").textContent = error.message; }
+}
+
+const accountDialog = document.getElementById("accountDialog");
+function openAccountDialog(account = null) {
+    const form = document.getElementById("accountForm");
+    form.reset();
+    document.getElementById("accountMessage").textContent = "";
+    document.getElementById("accountDialogTitle").textContent = account ? "Editar cuenta" : "Crear cuenta";
+    form.elements.id.value = account ? account.id : "";
+    document.getElementById("createPasswordField").hidden = Boolean(account);
+    form.elements.password.required = !account;
+    form.elements.name.required = !account;
+    form.elements.paternalSurname.required = !account;
+    form.elements.email.required = false;
+    form.elements.username.value = account ? account.username : "";
+    form.elements.roleCode.value = account ? account.roleCode : "ALUMNO";
+    form.elements.username.readOnly = false;
+    ["name", "paternalSurname", "maternalSurname", "email"].forEach(key => { form.elements[key].disabled = Boolean(account); });
+    form.elements.phone.disabled = Boolean(account);
+    accountDialog.showModal();
+}
+document.getElementById("cancelAccount").addEventListener("click", () => accountDialog.close());
+document.getElementById("accountForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const editing = Boolean(form.elements.id.value);
+    const message = document.getElementById("accountMessage");
+    const data = Object.fromEntries(new FormData(form));
+    try {
+        const response = await fetch(`api/auth/accounts/${editing ? "update" : "create"}`, {method: "POST", headers: {"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"}, body: new URLSearchParams(data)});
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "No se pudo guardar la cuenta.");
+        accountDialog.close(); renderAccounts(); showToast(editing ? "Cuenta actualizada." : "Cuenta creada.");
+    } catch (error) { message.textContent = error.message; }
+});
+
+const resetAccountPasswordDialog = document.getElementById("resetAccountPasswordDialog");
+function openResetAccountPassword(account) {
+    const form = document.getElementById("resetAccountPasswordForm"); form.reset();
+    form.elements.id.value = account.id;
+    document.getElementById("resetAccountPasswordMessage").textContent = "";
+    resetAccountPasswordDialog.showModal();
+}
+document.getElementById("cancelResetAccountPassword").addEventListener("click", () => resetAccountPasswordDialog.close());
+document.getElementById("resetAccountPasswordForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    const form = event.currentTarget, message = document.getElementById("resetAccountPasswordMessage");
+    if (form.elements.password.value !== form.elements.confirmation.value) { message.textContent = "La confirmación no coincide."; return; }
+    try {
+        const response = await fetch("api/auth/accounts/reset-password", {method: "POST", headers: {"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"}, body: new URLSearchParams({id: form.elements.id.value, password: form.elements.password.value})});
+        const result = await response.json(); if (!response.ok) throw new Error(result.error || "No se pudo restablecer la contraseña.");
+        resetAccountPasswordDialog.close(); showToast("Contraseña restablecida.");
+    } catch (error) { message.textContent = error.message; }
+});
+
+const passwordDialog = document.getElementById("passwordDialog");
+document.getElementById("changePasswordButton").addEventListener("click", () => {
+    document.getElementById("passwordMessage").textContent = "";
+    document.getElementById("changePasswordForm").reset();
+    passwordDialog.showModal();
+});
+document.getElementById("cancelPassword").addEventListener("click", () => passwordDialog.close());
+document.getElementById("changePasswordForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const message = document.getElementById("passwordMessage");
+    const submit = form.querySelector('button[type="submit"]');
+    const values = Object.fromEntries(new FormData(form));
+    if (values.newPassword !== values.confirmPassword) { message.textContent = "La confirmación no coincide."; return; }
+    submit.disabled = true;
+    try {
+        const response = await fetch("api/auth/change-password", {method: "POST", headers: {"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"}, body: new URLSearchParams(values)});
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "No se pudo cambiar la contraseña.");
+        passwordDialog.close();
+        showToast("Contraseña actualizada.");
+    } catch (error) { message.textContent = error.message; }
+    finally { submit.disabled = false; }
+});
+document.getElementById("logoutButton").addEventListener("click", async () => {
+    await fetch("api/auth/logout", {method: "POST"});
+    window.location.replace("registro.html");
+});
+
 
 /* =========================================================
    UTILIDADES

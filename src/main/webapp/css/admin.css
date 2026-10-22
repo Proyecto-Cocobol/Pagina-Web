@@ -2099,3 +2099,34 @@ a {
         align-items: flex-start;
     }
 }
+.admin-user { display:flex; align-items:center; gap:10px; }
+.account-button { border:1px solid rgba(255,255,255,.25); border-radius:6px; padding:8px 10px; color:inherit; background:transparent; cursor:pointer; font:inherit; }
+.account-button:hover { background:rgba(255,255,255,.1); }
+.password-dialog { width:min(440px,calc(100% - 32px)); border:0; border-radius:12px; padding:0; color:#182018; box-shadow:0 20px 70px #0008; }
+.password-dialog::backdrop { background:#0009; }
+.password-dialog form { padding:26px; }
+.password-dialog h2 { margin:0 0 10px; }
+.password-dialog label { display:grid; gap:6px; margin:14px 0; font-weight:600; }
+.password-dialog input { width:100%; box-sizing:border-box; border:1px solid #cbd2cb; border-radius:6px; padding:10px; font:inherit; }
+.password-dialog #passwordMessage { min-height:1.3em; color:#a22020; }
+.dialog-actions { display:flex; justify-content:flex-end; gap:10px; }
+.dialog-actions button { border:0; border-radius:6px; padding:10px 14px; cursor:pointer; font:inherit; }
+.dialog-actions button[type="submit"] { color:white; background:#176b37; }
+@media(max-width:700px) { .admin-user { flex-wrap:wrap; justify-content:center; } .account-button { padding:6px 8px; font-size:.8rem; } }
+.account-dialog { max-height:90vh; overflow:auto; }
+.account-dialog label[hidden] { display:none; }
+.account-dialog input, .account-dialog select { width:100%; box-sizing:border-box; border:1px solid #cbd2cb; border-radius:6px; padding:9px; font:inherit; }
+.account-dialog #accountMessage, #resetAccountPasswordMessage { min-height:1.3em; color:#a22020; }
+.accounts-panel { padding:28px; }
+.accounts-heading { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:20px; }
+.accounts-heading h1 { margin:0; }
+.accounts-heading p { margin:6px 0 0; color:#666; }
+.accounts-panel .table-container { overflow-x:auto; }
+.accounts-panel .data-table { min-width:800px; }
+.accounts-panel .data-table td:last-child { display:flex; gap:8px; }
+.account-security-note { margin-top:16px; color:#555; font-size:.9rem; }
+@media (max-width:1100px) {
+    .admin-header { flex-wrap:wrap; gap:8px 15px; padding:8px 20px; }
+    .main-nav { flex:1 1 calc(100% - 110px); }
+    .admin-user { display:flex; flex:0 0 100%; justify-content:flex-end; padding-bottom:4px; }
+}

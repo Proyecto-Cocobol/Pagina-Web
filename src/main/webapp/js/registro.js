@@ -46,16 +46,24 @@ formulario.addEventListener("submit", function(event) {
         return;
     }
 
-    /*
-     * VALIDACIÓN TEMPORAL:
-     *
-     * Todavía no se verifica si la boleta o contraseña
-     * pertenecen a un usuario real.
-     *
-     * Cuando se conecte la base de datos, aquí se sustituirá
-     * esta redirección por la autenticación correspondiente.
-     */
-
-    window.location.href = "admin.html";
+    const boton = formulario.querySelector('button[type="submit"]');
+    boton.disabled = true;
+    boton.textContent = "Verificando…";
+    fetch("api/auth/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"},
+        body: new URLSearchParams({boleta, password})
+    }).then(async response => {
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "No se pudo iniciar sesión.");
+        window.location.assign("admin.html");
+    }).catch(error => {
+        mensajeError.textContent = error.message;
+        campoPassword.value = "";
+        campoPassword.focus();
+    }).finally(() => {
+        boton.disabled = false;
+        boton.textContent = "Ingresar";
+    });
 });
 

@@ -40,26 +40,20 @@
                 Ingresa tus datos para continuar.
             </p>
 
-            <!--
-                El formulario conserva los campos originales.
-                No crea usuarios ni guarda contraseñas.
-                La autenticación real deberá implementarse
-                posteriormente en el servidor.
-            -->
             <form id="formLogin">
 
                 <!-- Número de boleta -->
                 <div class="grupo-formulario">
 
                     <label for="boleta">
-                        Número de boleta
+                        Usuario o número de boleta
                     </label>
 
                     <input
                         type="text"
                         id="boleta"
                         name="boleta"
-                        placeholder="Ingresa tu número de boleta"
+                        placeholder="Usuario o boleta"
                         autocomplete="username"
                         required
                     >
@@ -114,7 +108,7 @@
 
     </main>
 
-    <!-- Lógica de validación existente -->
+    <!-- Autenticación del servidor -->
     <script src="js/registro.js"></script>
 
 </body>
