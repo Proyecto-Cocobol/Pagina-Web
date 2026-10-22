@@ -8,10 +8,9 @@ public class DatabaseConnection {
 
     // Credenciales locales del usuario MySQL que usa la aplicación.
     // Si cambiaste los datos de MySQL, actualiza estos tres valores.
-    private static final String URL = "jdbc:mysql://localhost:3306/academia_lobos"
-            + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
-    private static final String USER = "root";
-    private static final String PASSWORD = "SegoProgra29";
+    private static final String URL = "jdbc:mysql://cocobol.mysql.database.azure.com:3306/academia_lobos?serverTimezone=UTC&useSSL=true&requireSSL=true";
+    private static final String USER = "Cocobol123";
+    private static final String PASSWORD = "Kratos41209";
 
     public static Connection getConnection() throws SQLException {
         try {
