@@ -37,6 +37,7 @@ public class InitialAdminInitializer implements ServletContextListener {
         String passwordLiteral = password.replace("\\", "\\\\").replace("'", "''");
         try (Connection c = DatabaseConnection.getAdminConnection(); Statement statement = c.createStatement()) {
             statement.execute("CREATE USER IF NOT EXISTS " + account + " IDENTIFIED BY '" + passwordLiteral + "'");
+            statement.execute("ALTER USER " + account + " IDENTIFIED BY '" + passwordLiteral + "'");
             statement.execute("GRANT SELECT ON academia_lobos.usuario TO " + account);
             statement.execute("GRANT SELECT ON academia_lobos.rol TO " + account);
             statement.execute("GRANT SELECT ON academia_lobos.alumno TO " + account);
